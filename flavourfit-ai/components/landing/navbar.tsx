@@ -112,7 +112,7 @@ export function Navbar() {
                                     </Link>
                                 </SignedOut>
                                 <SignedIn>
-                                    <Link href="/diet-preferences" onClick={() => setMobileOpen(false)}>
+                                    <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
                                         <Button variant="outline" className="w-full">
                                             Dashboard
                                         </Button>

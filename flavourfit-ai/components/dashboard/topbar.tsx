@@ -3,6 +3,7 @@
 import React from "react";
 import { Bell, Search, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { UserButton } from "@clerk/nextjs";
 
 export function Topbar() {
     return (
@@ -30,12 +31,11 @@ export function Topbar() {
                     className="flex items-center gap-2 p-1.5 pr-3 rounded-xl hover:bg-muted transition-colors"
                     aria-label="User menu"
                 >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                        <User className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="hidden sm:block text-sm font-medium text-main">
-                        Anshul
-                    </span>
+                    {/* <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                        <UserButton  />
+                    </div> */}
+                    <UserButton />
+
                 </button>
             </div>
         </header>

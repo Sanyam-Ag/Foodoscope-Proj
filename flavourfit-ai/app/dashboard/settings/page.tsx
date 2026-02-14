@@ -2,6 +2,7 @@
 
 import React from "react";
 import { User, Bell, Shield, Palette, Globe, LogOut } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -150,7 +151,14 @@ export default function SettingsPage() {
                             </span>
                         ))}
                     </div>
-                    <Input placeholder="Add dietary preference..." />
+                    <div className="flex flex-col gap-4">
+                        <Input placeholder="Add dietary preference..." />
+                        <Link href="/diet-preferences">
+                            <Button variant="outline" className="w-full">
+                                Update Complete Diet Profile
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
             </FadeIn>
 

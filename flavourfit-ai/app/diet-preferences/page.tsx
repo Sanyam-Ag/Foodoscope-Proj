@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
-import { X, ChevronDown, Check } from "lucide-react";
+import { X, ChevronDown, Check, ChevronLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
     allergyGroups,
     medicalHistoryGroups,
@@ -203,6 +204,7 @@ function CustomSelect({
 }
 
 export default function DietPreferencesPage() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         medicalHistory: [] as string[],
         previousDiet: "",
@@ -235,6 +237,57 @@ export default function DietPreferencesPage() {
             dinner: ""
         }
     });
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPreferences = async () => {
+            try {
+                const response = await fetch("/api/get-preferences");
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.user) {
+                        const u = data.user;
+                        setFormData({
+                            medicalHistory: u.medicalHistory || [],
+                            previousDiet: u.previousDiet || "",
+                            previousDietRating: u.previousDietRating || "",
+                            age: String(u.age || ""),
+                            height: String(u.height || ""),
+                            weight: String(u.weight || ""),
+                            gender: u.gender || "",
+                            dietaryPreference: u.dietaryPreference || "",
+                            activityLevel: u.activityLevel || "",
+                            primaryGoal: u.primaryGoal || "",
+                            cuisines: u.cuisines || [],
+                            spiceLevel: u.flavorPreferences?.spiceLevel || 3,
+                            sweetness: u.flavorPreferences?.sweetness || 3,
+                            proteinLevel: u.macroPreferences?.protein || 3,
+                            carbsLevel: u.macroPreferences?.carbs || 3,
+                            fatsLevel: u.macroPreferences?.fats || 3,
+                            alcohol: u.alcohol || "",
+                            eatingPreferences: "", // Deprecated/Legacy field
+                            allergies: u.allergies || [],
+                            wakeUpTime: u.wakeUpTime || "",
+                            sleepTime: u.sleepTime || "",
+                            mealsPerDay: u.mealsPerDay || "",
+                            mealTimes: {
+                                breakfast: u.mealTimes?.breakfast || "",
+                                lunch: u.mealTimes?.lunch || "",
+                                dinner: u.mealTimes?.dinner || ""
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching preferences:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPreferences();
+    }, []);
 
     const [inputStates, setInputStates] = useState({
         allergies: "",
@@ -354,9 +407,35 @@ export default function DietPreferencesPage() {
         }
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+                    <p className="text-sm font-medium text-secondary animate-pulse">Loading your preferences...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen bg-background py-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto space-y-8">
+        <div className="min-h-screen bg-background py-16 px-6 font-sans">
+            <div className="max-w-4xl mx-auto space-y-8">
+                {/* Back Button */}
+                <div className="flex justify-start">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => router.back()}
+                        className="group flex items-center gap-2 text-secondary hover:text-main transition-all duration-200"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                            <ChevronLeft className="w-4 h-4" />
+                        </div>
+                        <span className="text-sm font-medium">Go Back</span>
+                    </Button>
+                </div>
+
                 <div className="text-center">
                     <h1 className="text-3xl font-bold text-main">Customize Your Diet Plan</h1>
                     <p className="mt-2 text-secondary">
