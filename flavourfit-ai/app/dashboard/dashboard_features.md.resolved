@@ -1,0 +1,91 @@
+# FlavorFit Dashboard Features Documentation
+
+This document provides a comprehensive overview of the features available in the FlavorFit dashboard.
+
+## 1. Dashboard Overview (`/dashboard`)
+The main dashboard serves as the central hub, providing users with a high-level view of their nutrition status and quick access to key actions.
+
+### **Features:**
+- **Stats Cards**: Real-time tracking of key metrics:
+  - **Diet Score**: Overall health score with weekly trend.
+  - **Calories Remaining**: Daily calorie countdown.
+  - **Energy Trend**: Comparison of energy levels vs. last week.
+  - **Recent Reaction**: Alerts for any food sensitivities (e.g., "Dairy sensitivity").
+- **Quick Actions**: Shortcuts to common tasks:
+  - **Upload Ingredients**: Jump to ingredient analysis.
+  - **Generate Diet Plan**: Create a new weekly meal plan.
+  - **Ask AI Assistant**: Direct link to the Feedback/AI chat interface.
+- **Analytics Charts**:
+  - **Weekly Energy**: Line chart showing energy levels Monday-Sunday.
+  - **Flavor Profile**: Radar chart visualizing taste preferences (Sweet, Sour, Salty, Bitter, Umami, Spicy).
+  - **Nutrition Breakdown**: Bar chart displaying intake of Protein, Carbs, Fats, Fiber, and Vitamins.
+- **Recent Meals**: A log of recent activity showing meal name, type (Breakfast/Lunch/Dinner/Snack), calories, status (Completed/Upcoming/Skipped), and time.
+
+---
+
+## 2. Upload Ingredients (`/dashboard/upload`)
+An AI-powered tool to identify ingredients from user-uploaded photos and suggest relevant recipes.
+
+### **Features:**
+- **Image Upload**: Supports Drag & Drop or file selection for PNG/JPG images (up to 10MB).
+- **AI Detection**: Analyzes the image to identify specific ingredients (e.g., "Chicken Breast", "Broccoli").
+- **Recipe Generation**: Automatically suggests recipes based on the detected ingredients.
+  - Displays **Match Percentage**, **Preparation Time**, and **Calories**.
+
+---
+
+## 3. Recipes (`/dashboard/recipes`)
+A personalized recipe discovery hub tailored to the user's taste and dietary goals.
+
+### **Features:**
+- **Search & Filter**:
+  - text search for specific recipes.
+  - **Categories**: Quick filters for "Quick", "High Protein", "Vegan", "Keto", "Gluten-Free".
+- **Recipe Cards**: Detailed view for each recipe including:
+  - **Match Score**: How well it fits the user's profile.
+  - **Quick Stats**: Time, Calories, Difficulty (Easy/Medium/Hard).
+  - **Tags**: Health labels (e.g., "High Protein", "Omega-3").
+  - **Interactions**: "View Recipe" detail and "Favorite" (Heart) toggle.
+
+---
+
+## 4. Diet Plan (`/dashboard/diet-plan`)
+A comprehensive weekly meal planner and nutrition tracker.
+
+### **Features:**
+- **Weekly Calendar**: Interactive day selector (Mon-Sun).
+- **Nutrition Tracker**: Progress bars for daily goals:
+  - **Calories** (kcal)
+  - **Protein** (g)
+  - **Carbs** (g)
+  - **Fat** (g)
+- **Meal Timeline**: Chronological list of daily meals (Breakfast, Lunch, Dinner, Snack).
+  - **Macro Breakdown**: Per-meal protein, carbs, fat, and calorie counts.
+  - **AI Insights**: Notes on health benefits (e.g., "Rich in antioxidants").
+  - **Feedback**: Quick button to log feedback for a specific meal.
+
+---
+
+## 5. Feedback / AI Assistant (`/dashboard/feedback`)
+An interface for tracking subjective health metrics and training the AI.
+
+### **Features:**
+- **Contextual Input**: Text area for detailed user comments on meals.
+- **Mood Tracking**: 5-point scale (Bad to Amazing).
+- **Energy Level**: Adjustable slider (1-5).
+- **Digestion Comfort**: Options ranging from "Uncomfortable" to "Excellent".
+- **AI Learning**: Submitting feedback helps the AI personalize future recommendations.
+
+---
+
+## 6. Settings (`/dashboard/settings`)
+User preferences and account management.
+
+### **Features:**
+- **Profile Management**: Update Full Name and Email; UI for photo change.
+- **Notifications**: granular toggles for:
+  - Meal reminders
+  - Weekly progress reports
+  - AI recipe suggestions
+- **Dietary Preferences**: Tag-based system to manage restrictions (e.g., "Dairy-Free", "Nut Allergy", "Low Sodium").
+- **Account Actions**: Sign Out functionality.
