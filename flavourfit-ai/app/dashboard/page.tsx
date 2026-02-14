@@ -3,6 +3,7 @@
 import React from "react";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { QuickActions } from "@/components/dashboard/quick-actions";
+import { RecipeOfTheDay } from "@/components/dashboard/recipe-of-the-day";
 import { DashboardCharts } from "@/components/dashboard/charts";
 import { RecentMeals } from "@/components/dashboard/recent-meals";
 import { FadeIn } from "@/components/motion-wrapper";
@@ -26,10 +27,14 @@ export default function DashboardPage() {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-                <QuickActions />
+                <RecipeOfTheDay />
             </FadeIn>
 
             <FadeIn delay={0.3}>
+                <QuickActions />
+            </FadeIn>
+
+            <FadeIn delay={0.4}>
                 <DashboardCharts />
             </FadeIn>
 
