@@ -38,11 +38,12 @@ class RecipeMatch(BaseModel):
     Recipe_title: str
     score: float
 
+class NutrientRange(BaseModel):
+    min: float
+    max: float
+
 class RecommendationResponse(BaseModel):
-    status: str
-    user_id: str
-    api_request_payload: Dict[str, Any]
-    internal_preview: Dict[str, Any]
+    nutrient_ranges: Dict[str, NutrientRange]
 
 @app.get("/")
 async def root():
@@ -52,6 +53,7 @@ async def root():
 async def get_recommendations(profile: UserProfileRequest):
     """
     Triggers the recommendation pipeline for a given user profile.
+    Calculates min/max ranges for each nutrient across generative profiles.
     """
     try:
         # Convert Pydantic model to dict for the pipeline
@@ -59,8 +61,26 @@ async def get_recommendations(profile: UserProfileRequest):
         
         # Run the existing pipeline logic
         results = run_recommendation_pipeline(user_data)
+        profiles = results["internal_preview"]["generative_profiles"]
         
-        return results
+        if not profiles or not isinstance(profiles, list):
+            return {"nutrient_ranges": {}}
+
+        # Aggregate min/max for each nutrient
+        nutrient_keys = profiles[0].keys()
+        nutrient_ranges = {}
+        
+        for key in nutrient_keys:
+            values = [p[key] for p in profiles if key in p]
+            if values:
+                nutrient_ranges[key] = {
+                    "min": min(values),
+                    "max": max(values)
+                }
+        
+        return {
+            "nutrient_ranges": nutrient_ranges
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
