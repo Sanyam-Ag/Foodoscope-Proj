@@ -1,5 +1,9 @@
 export const allergyGroups = [
     {
+        category: "None",
+        items: ["No Known Allergies"],
+    },
+    {
         category: "Nuts & Seeds",
         items: ["Peanut", "Almond", "Cashew", "Walnut", "Pistachio", "Hazelnut", "Pecan", "Macadamia", "Pine Nut", "Sesame", "Sunflower Seeds", "Poppy Seeds"],
     },
@@ -26,6 +30,10 @@ export const allergyGroups = [
 ];
 
 export const medicalHistoryGroups = [
+    {
+        category: "None",
+        items: ["No Known Medical Conditions"],
+    },
     {
         category: "Metabolic & Endocrine",
         items: ["Diabetes Type 1", "Diabetes Type 2", "Prediabetes", "Insulin Resistance", "Hypothyroidism", "Hyperthyroidism", "Hashimoto's", "PCOS (Polycystic Ovary Syndrome)", "Metabolic Syndrome", "Obesity", "Gout"],

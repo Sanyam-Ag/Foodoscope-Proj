@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 const navLinks = [
     { href: "#features", label: "Features" },
     { href: "#how-it-works", label: "How It Works" },
@@ -43,16 +45,26 @@ export function Navbar() {
 
                 {/* Desktop CTA */}
                 <div className="hidden md:flex items-center gap-3">
-                    <Link href="/login">
-                        <Button variant="ghost" size="sm">
-                            Log In
-                        </Button>
-                    </Link>
-                    <Link href="/signup">
-                        <Button size="sm" variant="accent">
-                            Get Started
-                        </Button>
-                    </Link>
+                    <SignedOut>
+                        <Link href="/sign-in">
+                            <Button variant="ghost" size="sm">
+                                Sign In
+                            </Button>
+                        </Link>
+                        <Link href="/signup">
+                            <Button size="sm" variant="accent">
+                                Get Started
+                            </Button>
+                        </Link>
+                    </SignedOut>
+                    <SignedIn>
+                        <Link href="/diet-preferences">
+                            <Button variant="ghost" size="sm">
+                                Dashboard
+                            </Button>
+                        </Link>
+                        <UserButton afterSignOutUrl="/" />
+                    </SignedIn>
                 </div>
 
                 {/* Mobile Toggle */}
@@ -87,16 +99,28 @@ export function Navbar() {
                                 </a>
                             ))}
                             <div className="flex flex-col gap-2 pt-2 border-t border-border">
-                                <Link href="/login" onClick={() => setMobileOpen(false)}>
-                                    <Button variant="outline" className="w-full">
-                                        Log In
-                                    </Button>
-                                </Link>
-                                <Link href="/signup" onClick={() => setMobileOpen(false)}>
-                                    <Button variant="accent" className="w-full">
-                                        Get Started
-                                    </Button>
-                                </Link>
+                                <SignedOut>
+                                    <Link href="/sign-in" onClick={() => setMobileOpen(false)}>
+                                        <Button variant="outline" className="w-full">
+                                            Sign In
+                                        </Button>
+                                    </Link>
+                                    <Link href="/signup" onClick={() => setMobileOpen(false)}>
+                                        <Button variant="accent" className="w-full">
+                                            Get Started
+                                        </Button>
+                                    </Link>
+                                </SignedOut>
+                                <SignedIn>
+                                    <Link href="/diet-preferences" onClick={() => setMobileOpen(false)}>
+                                        <Button variant="outline" className="w-full">
+                                            Dashboard
+                                        </Button>
+                                    </Link>
+                                    <div className="flex justify-center py-2">
+                                        <UserButton afterSignOutUrl="/" />
+                                    </div>
+                                </SignedIn>
                             </div>
                         </div>
                     </motion.div>

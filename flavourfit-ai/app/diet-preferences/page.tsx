@@ -272,11 +272,26 @@ export default function DietPreferencesPage() {
         const formattedItem = item.trim();
         // @ts-ignore
         if (formattedItem && !formData[field].includes(formattedItem)) {
-            setFormData((prev) => ({
-                ...prev,
-                // @ts-ignore
-                [field]: [...prev[field], formattedItem],
-            }));
+            setFormData((prev) => {
+                let currentItems = [...prev[field]];
+
+                // Logic for "None" options
+                const noneOptions = ["No Known Allergies", "No Known Medical Conditions"];
+
+                if (noneOptions.includes(formattedItem)) {
+                    // If adding "None", clear everything else
+                    currentItems = [formattedItem];
+                } else {
+                    // If adding a normal item, remove "None" if it exists
+                    currentItems = currentItems.filter(i => !noneOptions.includes(i));
+                    currentItems.push(formattedItem);
+                }
+
+                return {
+                    ...prev,
+                    [field]: currentItems,
+                };
+            });
             setInputStates((prev) => ({ ...prev, [field]: "" }));
         }
     };
@@ -289,10 +304,54 @@ export default function DietPreferencesPage() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Diet Preferences Submitted:", formData);
-        alert("Preferences saved! Check console for data.");
+
+        // Strict Validation for ML Data
+        const requiredFields = [
+            "age", "gender", "height", "weight", "activityLevel", "primaryGoal",
+            "dietaryPreference", "previousDiet", "previousDietRating", "alcohol",
+            "wakeUpTime", "sleepTime", "mealsPerDay"
+        ];
+
+        const missingFields = requiredFields.filter(f => !formData[f as keyof typeof formData]);
+
+        if (formData.medicalHistory.length === 0) missingFields.push("Medical History");
+        if (formData.allergies.length === 0) missingFields.push("Allergies");
+        if (formData.cuisines.length === 0) missingFields.push("Cuisines");
+        if (!formData.mealTimes.breakfast || !formData.mealTimes.lunch || !formData.mealTimes.dinner) {
+            missingFields.push("All Meal Times");
+        }
+
+        if (missingFields.length > 0) {
+            alert(`Please complete all fields for your personalized plan. Missing: ${missingFields.join(", ")}`);
+            return;
+        }
+
+        try {
+            console.log("Submitting Diet Preferences:", formData);
+
+            const response = await fetch("/api/save-preferences", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert("Preferences saved successfully! 🚀 Your diet plan is being generated.");
+                console.log("Server Response:", result);
+            } else {
+                alert(`Error: ${result.message}`);
+                console.error("Server Error:", result);
+            }
+        } catch (error) {
+            console.error("Submission Error:", error);
+            alert("Something went wrong. Please try again.");
+        }
     };
 
     return (
