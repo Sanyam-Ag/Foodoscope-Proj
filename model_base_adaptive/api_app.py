@@ -23,16 +23,16 @@ async def startup_event():
 # Pydantic Models for Request/Response
 class UserProfileRequest(BaseModel):
     user_id: str = Field(..., example="user_001")
-    age: int = Field(..., example=30)
+    age: int = Field(..., example=25)
     gender: str = Field(..., example="male")
-    weight: float = Field(..., example=75.0)
+    weight: float = Field(..., example=65.0)
     height: float = Field(..., example=175.0)
     activityLevel: str = Field(..., example="moderately_active")
     dietaryPreference: str = Field(..., example="vegan")
-    primaryGoal: str = Field(..., example="weight_loss")
-    allergies: List[str] = Field(default_factory=list, example=["Peanuts"])
-    medicalHistory: List[str] = Field(default_factory=list, example=["Diabetes"])
-    healthGoals: List[str] = Field(default_factory=list, example=["Weight Loss"])
+    primaryGoal: str = Field(..., example="weight_gain")
+    allergies: List[str] = Field(default_factory=list, example=["Peanuts", "Shellfish"])
+    medicalHistory: List[str] = Field(default_factory=list, example=["Diabetes Type 2", "Hypertension"])
+    healthGoals: List[str] = Field(default_factory=list, example=["Weight Gain"])
 
 class RecipeMatch(BaseModel):
     Recipe_title: str

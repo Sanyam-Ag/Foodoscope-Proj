@@ -4,21 +4,26 @@ import json
 def test_recommendation_api():
     url = "http://127.0.0.1:8000/recommend"
     
+    # Load profile data from the central JSON file
+    with open("data/initial_user_pref.json", "r") as f:
+        profile_data = json.load(f)
+    
+    # Ensure mandatory fields for API are present and correctly typed
     payload = {
         "user_id": "api_test_user",
-        "age": 28,
-        "gender": "male",
-        "weight": 60.0,
-        "height": 165.0,
-        "activityLevel": "moderately_active",
-        "dietaryPreference": "vegan",
-        "primaryGoal": "weight_loss",
-        "allergies": ["Peanuts"],
-        "medicalHistory": ["Diabetes"],
-        "healthGoals": ["Weight Loss"]
+        "age": int(profile_data.get("age", 25)),
+        "gender": profile_data.get("gender", "male"),
+        "weight": float(profile_data.get("weight", 65.0)),
+        "height": float(profile_data.get("height", 175.0)),
+        "activityLevel": profile_data.get("activityLevel", "moderately_active"),
+        "dietaryPreference": profile_data.get("dietaryPreference", "vegan"),
+        "primaryGoal": profile_data.get("primaryGoal", "weight_gain"),
+        "allergies": profile_data.get("allergies", []),
+        "medicalHistory": profile_data.get("medicalHistory", []),
+        "healthGoals": profile_data.get("healthGoals", ["Weight Gain"])
     }
     
-    print(f"Sending request to {url}...")
+    print(f"Sending request to {url} with data from initial_user_pref.json...")
     try:
         response = requests.post(url, json=payload, timeout=30)
         print(f"Status Code: {response.status_code}")
