@@ -1,0 +1,10 @@
+[
+  {
+    "condition": "Diabetes Type 2",
+    "guideline": "Limit added sugars. Prefer high fiber foods. Avoid refined carbohydrates. Control total carbohydrate intake."
+  },
+  {
+    "condition": "Hypertension",
+    "guideline": "Limit sodium intake to below 1500 mg per day. Avoid processed foods. Prefer potassium-rich vegetables."
+  }
+]
