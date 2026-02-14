@@ -1,0 +1,109 @@
+{
+    "user_001": [
+        {
+            "timestamp": "2026-02-14T21:42:21.590079",
+            "recommendations": [
+                {
+                    "Recipe_id": 2631,
+                    "Recipe_title": "Ta'ameya (Egyptian Falafel)",
+                    "Region": "Middle Eastern",
+                    "score": 0.8744697328601836
+                },
+                {
+                    "Recipe_id": 2624,
+                    "Recipe_title": "Dukka",
+                    "Region": "Middle Eastern",
+                    "score": 0.8292363983839148
+                },
+                {
+                    "Recipe_id": 2723,
+                    "Recipe_title": "Vegan African Stew",
+                    "Region": "Rest Africa",
+                    "score": 0.8236512570338173
+                },
+                {
+                    "Recipe_id": 2810,
+                    "Recipe_title": "Qumbe (East African Coconut Candy)",
+                    "Region": "Rest Africa",
+                    "score": 0.8218418254318373
+                },
+                {
+                    "Recipe_id": 2807,
+                    "Recipe_title": "Ethiopian Cabbage Dish",
+                    "Region": "Rest Africa",
+                    "score": 0.8216159915861333
+                }
+            ]
+        },
+        {
+            "timestamp": "2026-02-14T21:44:12.062985",
+            "recommendations": [
+                {
+                    "Recipe_id": 2631,
+                    "Recipe_title": "Ta'ameya (Egyptian Falafel)",
+                    "Region": "Middle Eastern",
+                    "score": 0.8855264587058095
+                },
+                {
+                    "Recipe_id": 2624,
+                    "Recipe_title": "Dukka",
+                    "Region": "Middle Eastern",
+                    "score": 0.84219131292275
+                },
+                {
+                    "Recipe_id": 2723,
+                    "Recipe_title": "Vegan African Stew",
+                    "Region": "Rest Africa",
+                    "score": 0.8367046673501956
+                },
+                {
+                    "Recipe_id": 2807,
+                    "Recipe_title": "Ethiopian Cabbage Dish",
+                    "Region": "Rest Africa",
+                    "score": 0.8348646357082133
+                },
+                {
+                    "Recipe_id": 2810,
+                    "Recipe_title": "Qumbe (East African Coconut Candy)",
+                    "Region": "Rest Africa",
+                    "score": 0.8347466804745182
+                }
+            ]
+        },
+        {
+            "timestamp": "2026-02-14T21:45:06.833590",
+            "recommendations": [
+                {
+                    "Recipe_id": 2631,
+                    "Recipe_title": "Ta'ameya (Egyptian Falafel)",
+                    "Region": "Middle Eastern",
+                    "score": 0.9106919915721706
+                },
+                {
+                    "Recipe_id": 2624,
+                    "Recipe_title": "Dukka",
+                    "Region": "Middle Eastern",
+                    "score": 0.8722613368287987
+                },
+                {
+                    "Recipe_id": 2723,
+                    "Recipe_title": "Vegan African Stew",
+                    "Region": "Rest Africa",
+                    "score": 0.8669846416110103
+                },
+                {
+                    "Recipe_id": 2807,
+                    "Recipe_title": "Ethiopian Cabbage Dish",
+                    "Region": "Rest Africa",
+                    "score": 0.8656791965990133
+                },
+                {
+                    "Recipe_id": 2810,
+                    "Recipe_title": "Qumbe (East African Coconut Candy)",
+                    "Region": "Rest Africa",
+                    "score": 0.864711227640871
+                }
+            ]
+        }
+    ]
+}
