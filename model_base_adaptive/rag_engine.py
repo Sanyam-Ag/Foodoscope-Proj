@@ -5,20 +5,36 @@ import json
 from config import GUIDELINES_DATA, EMBEDDING_MODEL
 
 class MedicalRAG:
+    _model = None
+    _index = None
+    _embeddings = None
+    _texts = None
+    _conditions = None
+    _guidelines = None
+
     def __init__(self):
-        self.model = SentenceTransformer(EMBEDDING_MODEL)
+        if MedicalRAG._model is None:
+            print("Initializing MedicalRAG (Model & Index)...")
+            MedicalRAG._model = SentenceTransformer(EMBEDDING_MODEL)
+            
+            with open(GUIDELINES_DATA, "r") as f:
+                MedicalRAG._guidelines = json.load(f)
+            
+            MedicalRAG._texts = [g["guideline"] for g in MedicalRAG._guidelines]
+            MedicalRAG._conditions = [g["condition"] for g in MedicalRAG._guidelines]
+            
+            MedicalRAG._embeddings = MedicalRAG._model.encode(MedicalRAG._texts)
+            
+            dim = MedicalRAG._embeddings.shape[1]
+            MedicalRAG._index = faiss.IndexFlatL2(dim)
+            MedicalRAG._index.add(np.array(MedicalRAG._embeddings))
         
-        with open(GUIDELINES_DATA, "r") as f:
-            self.guidelines = json.load(f)
-        
-        self.texts = [g["guideline"] for g in self.guidelines]
-        self.conditions = [g["condition"] for g in self.guidelines]
-        
-        self.embeddings = self.model.encode(self.texts)
-        
-        dim = self.embeddings.shape[1]
-        self.index = faiss.IndexFlatL2(dim)
-        self.index.add(np.array(self.embeddings))
+        self.model = MedicalRAG._model
+        self.guidelines = MedicalRAG._guidelines
+        self.texts = MedicalRAG._texts
+        self.conditions = MedicalRAG._conditions
+        self.embeddings = MedicalRAG._embeddings
+        self.index = MedicalRAG._index
     
     def retrieve(self, medical_conditions, top_k=3):
         query = " ".join(medical_conditions)

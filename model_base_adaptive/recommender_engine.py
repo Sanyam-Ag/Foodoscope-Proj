@@ -6,29 +6,40 @@ from sklearn.ensemble import GradientBoostingRegressor
 from config import FOOD_DATA
 
 class NutritionRecommender:
-    def __init__(self):
-        self.foods = pd.read_csv(FOOD_DATA)
+    _foods = None
+    _nutrients = None
+    _scaler = None
+    _means = None
+    _stds = None
 
-        # Identify nutritional columns dynamically
-        # Exclude metadata and non-nutritive flags
-        excluded_cols = [
-            "Recipe_id", "servings", "Recipe_title", "Region", "Sub_region", 
-            "Continent", "vegan", "pescetarian", "lacto_vegetarian"
-        ]
-        
-        self.nutrients = [
-            col for col in self.foods.select_dtypes(include=[np.number]).columns 
-            if col not in excluded_cols
-        ]
-        
-        self.foods[self.nutrients] = self.foods[self.nutrients].fillna(0)
-        self.scaler = StandardScaler()
-        # Pre-fit scaler on the entire dataset for normalization
-        self.scaler.fit(self.foods[self.nutrients])
-        
-        # Population knowledge for micro-nutrients and weighting
-        self.means = self.foods[self.nutrients].mean().to_dict()
-        self.stds = self.foods[self.nutrients].std()
+    def __init__(self):
+        if NutritionRecommender._foods is None:
+            print("Initializing NutritionRecommender (Dataset & Scaler)...")
+            NutritionRecommender._foods = pd.read_csv(FOOD_DATA)
+
+            # Identify nutritional columns dynamically
+            excluded_cols = [
+                "Recipe_id", "servings", "Recipe_title", "Region", "Sub_region", 
+                "Continent", "vegan", "pescetarian", "lacto_vegetarian"
+            ]
+            
+            NutritionRecommender._nutrients = [
+                col for col in NutritionRecommender._foods.select_dtypes(include=[np.number]).columns 
+                if col not in excluded_cols
+            ]
+            
+            NutritionRecommender._foods[NutritionRecommender._nutrients] = NutritionRecommender._foods[NutritionRecommender._nutrients].fillna(0)
+            NutritionRecommender._scaler = StandardScaler()
+            NutritionRecommender._scaler.fit(NutritionRecommender._foods[NutritionRecommender._nutrients])
+            
+            NutritionRecommender._means = NutritionRecommender._foods[NutritionRecommender._nutrients].mean().to_dict()
+            NutritionRecommender._stds = NutritionRecommender._foods[NutritionRecommender._nutrients].std()
+
+        self.foods = NutritionRecommender._foods
+        self.nutrients = NutritionRecommender._nutrients
+        self.scaler = NutritionRecommender._scaler
+        self.means = NutritionRecommender._means
+        self.stds = NutritionRecommender._stds
 
     def get_adaptive_weights(self):
         """

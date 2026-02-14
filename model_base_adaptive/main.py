@@ -8,10 +8,11 @@ from logger import log_recommendations
 import numpy as np
 import json
 
-def main():
-
-    user_data = load_json(USER_PREF)
-    
+def run_recommendation_pipeline(user_data):
+    """
+    The core orchestration logic to generate recommendations and API payloads.
+    Shared between CLI and FastAPI.
+    """
     recommender = NutritionRecommender()
     all_nutrients = recommender.nutrients
 
@@ -71,18 +72,23 @@ def main():
     # Structure output as JSON
     results = {
         "status": "success",
-        "user_id": "user_001",
-        "api_request_payload": api_payload, # The primary output for backend integration
+        "user_id": user_data.get("user_id", "user_001"),
+        "api_request_payload": api_payload, 
         "internal_preview": {
             "top_local_matches": recommendations[["Recipe_title", "score"]].head(3).to_dict(orient="records"),
             "generative_profiles": optimal_profiles
         }
     }
+    return results
+
+def main():
+    user_data = load_json(USER_PREF)
+    results = run_recommendation_pipeline(user_data)
     
     print("\nAPI Request Payload (JSON Format):")
     print(json.dumps(results, indent=4))
     
-    log_recommendations("user_001", results)
+    log_recommendations(results.get("user_id", "user_001"), results)
 
 if __name__ == "__main__":
     main()
