@@ -1,29 +1,32 @@
 {
   "age": "25",
   "gender": "male",
-  "height": "185",
+  "height": "175",
   "weight": "65",
-  
-  "medicalHistory": ["Diabetes Type 2", "Hypertension"],
-  "allergies": ["Peanuts", "Shellfish"],
-  
+  "medicalHistory": [
+    "Diabetes Type 2",
+    "Hypertension"
+  ],
+  "allergies": [
+    "Peanuts",
+    "Shellfish"
+  ],
   "dietaryPreference": "vegan",
   "activityLevel": "moderately_active",
   "primaryGoal": "weight_gain",
-  
   "alcohol": "socially",
-  
   "previousDietRating": "good",
   "previousDiet": "Tried Keto, it was okay but hard to sustain.",
-  
-  "cuisines": ["Italian", "Mexican", "Thai"],
-  
+  "cuisines": [
+    "Italian",
+    "Mexican",
+    "Thai"
+  ],
   "spiceLevel": 4,
   "sweetness": 2,
   "proteinLevel": 5,
   "carbsLevel": 3,
   "fatsLevel": 3,
-  
   "wakeUpTime": "07:00",
   "sleepTime": "23:00",
   "mealsPerDay": "3",
@@ -31,5 +34,5 @@
     "breakfast": "08:00",
     "lunch": "13:00",
     "dinner": "19:30"
-    }
+  }
 }

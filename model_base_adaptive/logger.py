@@ -15,7 +15,7 @@ def log_recommendations(user_id, recommendations):
 
     logs[user_id].append({
         "timestamp": datetime.now().isoformat(),
-        "recommendations": recommendations.to_dict(orient="records")
+        "data": recommendations.to_dict(orient="records") if hasattr(recommendations, 'to_dict') else recommendations
     })
 
     save_json(LOG_FILE, logs)
