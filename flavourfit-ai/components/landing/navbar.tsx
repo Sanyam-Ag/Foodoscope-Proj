@@ -58,7 +58,7 @@ export function Navbar() {
                         </Link>
                     </SignedOut>
                     <SignedIn>
-                        <Link href="/diet-preferences">
+                        <Link href="/dashboard">
                             <Button variant="ghost" size="sm">
                                 Dashboard
                             </Button>
