@@ -56,7 +56,7 @@ export default function FeedbackPage() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="max-w-2xl mx-auto space-y-6 pb-24">
             <FadeIn>
                 <div>
                     <h1 className="font-heading text-2xl font-bold text-main">
@@ -171,13 +171,12 @@ export default function FeedbackPage() {
                             </div>
                         </FadeIn>
 
-                        {/* Submit */}
-                        <FadeIn delay={0.3}>
+                        {/* Submit Button - Enhanced Visibility */}
+                        <div className="pt-2 pb-6">
                             <Button
                                 type="submit"
-                                variant="accent"
                                 size="lg"
-                                className="w-full"
+                                className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-lg transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] h-12 text-base font-bold"
                                 disabled={loading}
                             >
                                 {loading ? (
@@ -187,13 +186,13 @@ export default function FeedbackPage() {
                                         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                                     />
                                 ) : (
-                                    <>
-                                        <Send className="w-4 h-4" />
-                                        Submit Feedback
-                                    </>
+                                    <div className="flex items-center gap-2">
+                                        <Send className="w-5 h-5" />
+                                        <span>Submit Feedback</span>
+                                    </div>
                                 )}
                             </Button>
-                        </FadeIn>
+                        </div>
                     </motion.form>
                 ) : (
                     <motion.div

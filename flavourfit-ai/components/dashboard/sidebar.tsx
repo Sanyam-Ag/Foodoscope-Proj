@@ -18,10 +18,9 @@ import { cn } from "@/lib/utils";
 
 const sidebarItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-    { href: "/dashboard/upload", icon: Upload, label: "Upload Ingredients" },
     { href: "/dashboard/recipes", icon: ChefHat, label: "Recipes" },
     { href: "/dashboard/diet-plan", icon: CalendarDays, label: "Diet Plan" },
-    { href: "/dashboard/feedback", icon: MessageSquare, label: "Feedback" },
+
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
 ];
 
