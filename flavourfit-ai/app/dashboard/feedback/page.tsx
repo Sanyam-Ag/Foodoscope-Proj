@@ -105,14 +105,14 @@ export default function FeedbackPage() {
                                             type="button"
                                             onClick={() => setSelectedMood(mood.value)}
                                             className={`flex flex-col items-center gap-1.5 p-3 rounded-xl flex-1 transition-all duration-200 border ${selectedMood === mood.value
-                                                    ? "border-primary bg-primary/5 scale-105"
-                                                    : "border-transparent hover:bg-muted"
+                                                ? "border-primary bg-primary/5 scale-105"
+                                                : "border-transparent hover:bg-muted"
                                                 }`}
                                         >
                                             <mood.icon
                                                 className={`w-6 h-6 ${selectedMood === mood.value
-                                                        ? mood.color
-                                                        : "text-secondary"
+                                                    ? mood.color
+                                                    : "text-secondary"
                                                     }`}
                                             />
                                             <span className="text-[10px] font-medium text-secondary">
@@ -160,8 +160,8 @@ export default function FeedbackPage() {
                                             type="button"
                                             onClick={() => setDigestion(option.value)}
                                             className={`py-2.5 rounded-xl text-sm font-medium transition-all duration-200 border ${digestion === option.value
-                                                    ? "border-primary bg-primary/5 text-primary"
-                                                    : "border-border text-secondary hover:bg-muted"
+                                                ? "border-primary bg-primary/5 text-primary"
+                                                : "border-border text-secondary hover:bg-muted"
                                                 }`}
                                         >
                                             {option.label}

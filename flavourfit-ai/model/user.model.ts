@@ -49,6 +49,7 @@ export interface IUser extends Document {
     sleepTime: string;
     mealsPerDay: string;
     mealTimes: IMealTimes;
+    feedback: string;
 
     createdAt: Date;
     updatedAt: Date;
@@ -145,6 +146,7 @@ const UserSchema: Schema<IUser> = new Schema(
             lunch: { type: String, required: true, default: "" },
             dinner: { type: String, required: true, default: "" },
         },
+        feedback: { type: String, default: "" },
     },
     {
         timestamps: true,
