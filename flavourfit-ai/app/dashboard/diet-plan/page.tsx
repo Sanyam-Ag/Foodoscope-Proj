@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import {
     Coffee,
     UtensilsCrossed,
@@ -22,63 +23,68 @@ const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const meals = [
     {
         type: "Breakfast",
+        id: "2800",
         icon: Coffee,
         time: "8:00 AM",
-        name: "Overnight Oats with Berries",
-        calories: 380,
-        protein: 14,
-        carbs: 52,
-        fat: 12,
-        note: "Rich in antioxidants and slow-release energy.",
+        name: "Tunisian Grilled Salad (Selata Mishwiya)",
+        calories: 320,
+        protein: 16,
+        carbs: 20,
+        fat: 14,
+        note: "Fresh start to the day.",
         gradient: "from-accent/10 to-primary/5",
     },
     {
         type: "Lunch",
+        id: "2695",
         icon: UtensilsCrossed,
         time: "12:30 PM",
-        name: "Grilled Chicken Quinoa Bowl",
-        calories: 520,
-        protein: 42,
-        carbs: 48,
-        fat: 16,
-        note: "High protein, supports muscle recovery.",
+        name: "Moroccan Lamb Kabobs",
+        calories: 554,
+        protein: 51,
+        carbs: 38,
+        fat: 22,
+        note: "High protein, flavorful mid-day meal.",
         gradient: "from-primary/10 to-accent/5",
     },
     {
         type: "Dinner",
+        id: "2703",
         icon: Sunset,
         time: "7:00 PM",
-        name: "Salmon with Roasted Vegetables",
-        calories: 480,
-        protein: 36,
-        carbs: 28,
-        fat: 22,
-        note: "Omega-3 rich. Supports brain health.",
+        name: "Mushroom and Chickpea Tagine",
+        calories: 292,
+        protein: 19,
+        carbs: 45,
+        fat: 12,
+        note: "Hearty and warming for the evening.",
         gradient: "from-primary-hover/10 to-primary/5",
     },
     {
         type: "Snack",
+        id: "2613",
         icon: Apple,
         time: "3:30 PM",
-        name: "Greek Yogurt & Almonds",
-        calories: 220,
-        protein: 18,
-        carbs: 12,
-        fat: 10,
-        note: "Great afternoon pick-me-up.",
+        name: "Magpie's Easy Falafel Cakes",
+        calories: 409,
+        protein: 22,
+        carbs: 75,
+        fat: 20,
+        note: "Satisfying afternoon snack.",
         gradient: "from-accent-light/20 to-accent/5",
     },
 ];
 
 const nutritionTotals = [
-    { label: "Calories", current: 1600, total: 2100, unit: "kcal" },
-    { label: "Protein", current: 110, total: 140, unit: "g" },
-    { label: "Carbs", current: 140, total: 220, unit: "g" },
-    { label: "Fat", current: 60, total: 75, unit: "g" },
+    { label: "Calories", current: 1575, total: 2100, unit: "kcal" },
+    { label: "Protein", current: 108, total: 140, unit: "g" },
+    { label: "Carbs", current: 178, total: 220, unit: "g" },
+    { label: "Fat", current: 68, total: 75, unit: "g" },
 ];
 
 export default function DietPlanPage() {
     const [selectedDay, setSelectedDay] = useState(2); // Wednesday
+    const router = useRouter();
 
     return (
         <div className="max-w-5xl mx-auto space-y-6">
@@ -118,8 +124,8 @@ export default function DietPlanPage() {
                                 key={day}
                                 onClick={() => setSelectedDay(i)}
                                 className={`flex flex-col items-center py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${selectedDay === i
-                                        ? "bg-gradient-to-b from-primary to-primary-hover text-white shadow-md"
-                                        : "text-secondary hover:bg-muted"
+                                    ? "bg-gradient-to-b from-primary to-primary-hover text-white shadow-md"
+                                    : "text-secondary hover:bg-muted"
                                     }`}
                             >
                                 <span>{day}</span>
@@ -165,7 +171,10 @@ export default function DietPlanPage() {
                             transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
                         >
                             <ScaleOnHover>
-                                <div className="rounded-2xl border border-border bg-white shadow-sm overflow-hidden">
+                                <div
+                                    onClick={() => router.push(`/dashboard/recipes/${meal.id}`)}
+                                    className="rounded-2xl border border-border bg-white shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+                                >
                                     <div className="flex flex-col sm:flex-row">
                                         {/* Left accent stripe + icon */}
                                         <div

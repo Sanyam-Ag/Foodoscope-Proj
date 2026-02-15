@@ -23,11 +23,27 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
         const recipe = detailData.recipe;
 
         // Image logic - improve placeholder
+        // Image logic - consistent with frontend
         let imageUrl = recipe.img_url;
+        const fallbackImages = [
+            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2080&auto=format&fit=crop", // Salad
+            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop", // Healthy bowl
+            "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop", // Light meal
+            "https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=2032&auto=format&fit=crop", // Plated dish
+            "https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2070&auto=format&fit=crop", // Ingredients
+            "https://images.unsplash.com/photo-1473093226795-af9932fe5856?q=80&w=2094&auto=format&fit=crop", // Pasta/Grain
+            "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?q=80&w=2070&auto=format&fit=crop", // Meat/Protein
+            "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=2070&auto=format&fit=crop"  // Mediterranean
+        ];
+
         if (!imageUrl || imageUrl.includes("gk-shareGraphic.png") || imageUrl.includes("placeholder")) {
-            // Using a high-quality generic food image based on region/continent if possible
-            const query = recipe.Recipe_title || recipe.Sub_region || recipe.Region || "gourmet food";
-            imageUrl = `https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop`; // Good default
+            const title = recipe.Recipe_title || "Recipe";
+            let hash = 0;
+            for (let i = 0; i < title.length; i++) {
+                hash = title.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % fallbackImages.length;
+            imageUrl = fallbackImages[index];
         }
 
         const mappedRecipe = {

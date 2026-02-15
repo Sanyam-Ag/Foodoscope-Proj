@@ -7,10 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { FadeIn, StaggerContainer, StaggerItem, ScaleOnHover } from "@/components/motion-wrapper";
 
-const categories = ["All", "Carbs", "Protein", "Energy", "Calories"];
-
 export default function RecipesPage() {
-    const [activeTab, setActiveTab] = React.useState("All");
+    const [activeTab] = React.useState("All"); // Kept simple for now, or just remove
     const [recommendations, setRecommendations] = React.useState<{ [key: string]: any[] }>({
         carbs: [],
         protein: [],
@@ -76,25 +74,21 @@ export default function RecipesPage() {
         fetchAll();
     }, []);
 
-    const getFilteredRecipes = () => {
-        if (activeTab === "All") {
-            const all = [
-                ...recommendations.carbs,
-                ...recommendations.protein,
-                ...recommendations.energy,
-                ...recommendations.calories
-            ];
-            // Unique by ID and sort globally
-            const unique = Array.from(new Map(all.map(r => [r.id, r])).values());
-            console.log("Filtered Recipes Count:", unique.length);
-            return unique.sort((a, b) => parseInt(b.match) - parseInt(a.match)).slice(0, 12);
-        }
-        const filtered = recommendations[activeTab.toLowerCase()] || [];
-        console.log(`Filtered Recipes (${activeTab}) Count:`, filtered.length);
-        return filtered;
-    };
+    const recipesToShow = React.useMemo(() => {
+        const all = [
+            ...recommendations.carbs,
+            ...recommendations.protein,
+            ...recommendations.energy,
+            ...recommendations.calories
+        ];
+        // Unique by ID and sort globally
+        const unique = Array.from(new Map(all.map(r => [r.id, r])).values());
+        console.log("Filtered Recipes Count:", unique.length);
+        return unique.sort((a, b) => parseInt(b.match) - parseInt(a.match)).slice(0, 50); // Increased limit as we show all
+    }, [recommendations]);
 
-    const recipesToShow = getFilteredRecipes();
+    const isLoading = Object.values(loadingStates).some(Boolean) && recipesToShow.length === 0;
+
     return (
         <div className="space-y-6">
             <FadeIn>
@@ -114,44 +108,24 @@ export default function RecipesPage() {
                 </div>
             </FadeIn>
 
-            {/* Search + Filters */}
+            {/* Search */}
             <FadeIn delay={0.1}>
                 <div className="flex flex-col sm:flex-row gap-3">
                     <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary" />
                         <Input placeholder="Search recipes..." className="pl-10" />
                     </div>
-                    <div className="flex gap-2 overflow-x-auto pb-1">
-                        {categories.map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setActiveTab(cat)}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${activeTab === cat
-                                    ? "bg-primary text-white"
-                                    : "bg-muted text-secondary hover:bg-border"
-                                    }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
-                    </div>
                 </div>
             </FadeIn>
 
             {/* Recipe Grid */}
-            {activeTab !== "All" && loadingStates[activeTab.toLowerCase()] ? (
+            {isLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {[1, 2, 3, 4, 5, 6].map((i) => (
                         <div key={i} className="h-64 rounded-2xl bg-muted animate-pulse" />
                     ))}
                 </div>
-            ) : activeTab === "All" && Object.values(loadingStates).every(Boolean) ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <div key={i} className="h-64 rounded-2xl bg-muted animate-pulse" />
-                    ))}
-                </div>
-            ) : (activeTab !== "All" && errors[activeTab.toLowerCase()]) || (activeTab === "All" && Object.values(errors).every(Boolean)) ? (
+            ) : Object.values(errors).every(Boolean) && recipesToShow.length === 0 ? (
                 <div className="text-center py-20 bg-muted/30 rounded-3xl border border-dashed border-border">
                     <ChefHat className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
                     <h3 className="text-lg font-bold text-main">Failed to load recommendations</h3>

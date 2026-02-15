@@ -70,9 +70,9 @@ export function Hero() {
 
                         <FadeIn delay={0.4}>
                             <div className="flex flex-wrap gap-3">
-                                <Link href="/signup">
+                                <Link href="/dashboard">
                                     <Button size="lg" variant="accent" className="group">
-                                        Start Free
+                                        Start
                                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                                     </Button>
                                 </Link>

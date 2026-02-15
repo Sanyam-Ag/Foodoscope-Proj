@@ -81,7 +81,27 @@ export const getNutrientRanges = async () => {
         return await res.json();
     } catch (err) {
         console.error("Error in getNutrientRanges:", err);
-        return null;
+        // Fallback mock data to prevent app crash if backend is down
+        return {
+            nutrient_ranges: {
+                "Carbohydrate, by difference (g)": { min: 10, max: 100 },
+                "Protein (g)": { min: 10, max: 100 },
+                "Energy (kcal)": { min: 100, max: 800 },
+                "Calories": { min: 100, max: 800 }
+            },
+            target_nutrients: {
+                "Carbohydrate, by difference (g)": 50,
+                "Protein (g)": 50,
+                "Energy (kcal)": 500,
+                "Calories": 500
+            },
+            weights: {
+                "Carbohydrate, by difference (g)": 1,
+                "Protein (g)": 1,
+                "Energy (kcal)": 1,
+                "Calories": 1
+            }
+        };
     }
 };
 
